@@ -1,5 +1,7 @@
 package com.simontse.gankio.library.utils;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -12,6 +14,9 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Base64;
 
 import com.simontse.gankio.library.utils.io.FileUtils;
@@ -19,8 +24,11 @@ import com.simontse.gankio.library.utils.io.FileUtils;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import static android.R.attr.path;
 
 /**
  * Desction:Bitmap工具类
@@ -505,6 +513,42 @@ public class BitmapUtils {
             e.printStackTrace();
         }
         return degree;
+    }
+
+
+    public static String saveImageToGallery(Context context, Bitmap bmp, String saveName) {
+        //首先保存图片
+        File appDir = new File(Environment.getExternalStorageDirectory(), "DCIM");
+        if (!appDir.exists()) {
+            appDir.mkdir();
+        }
+        File file = new File(appDir, saveName);
+        if (!file.exists()) {
+            try {
+                FileOutputStream fos = new FileOutputStream(file);
+                bmp.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                fos.flush();
+                fos.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                return  null;
+            }
+
+            //其次把文件插入到系统图库
+            try {
+                MediaStore.Images.Media.insertImage(context.getContentResolver(),
+                        file.getAbsolutePath(), saveName, null);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                return null;
+            }
+
+            //最后通知图库更新
+            context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + path)));
+
+        }
+        return file.getAbsolutePath();
     }
 
 }

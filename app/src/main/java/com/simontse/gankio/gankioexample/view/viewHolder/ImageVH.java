@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by simon_pc on 2016/10/10.
  * Email: xiejx_op@foxmail.com
- * Description:
+ * Description:  图片展示的viewholder
  */
 
 public class ImageVH  extends BaseViewHolder<Result>{
