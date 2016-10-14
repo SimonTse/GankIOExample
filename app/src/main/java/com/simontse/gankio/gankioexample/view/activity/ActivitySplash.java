@@ -67,6 +67,7 @@ public class ActivitySplash extends BeamAppCompatActivity {
             public void onAnimationEnd(Animator animation) {
                 Intent intent = new Intent(ActivitySplash.this, ActivityMain.class);
                 startActivity(intent);
+                finish();
             }
         });
     }
