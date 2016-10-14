@@ -21,4 +21,9 @@
         <item name="color">@android:color/white</item>
     </style>
 
+    <style name="FitSystemWindows">
+        <item name="android:fitsSystemWindows">true</item>
+        <item name="android:clipToPadding">false</item>
+    </style>
+
 </resources>

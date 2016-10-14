@@ -27,7 +27,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
 
-        <activity android:name=".view.activity.ActivityMain">
+        <activity android:name=".view.activity.ActivitySplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -36,6 +36,7 @@
 
         <activity android:name=".view.activity.ActivityPhoto"/>
         <activity android:name=".view.activity.ActivityWeb"/>
+        <activity android:name=".view.activity.ActivityMain"/>
 
 
     </application>
